@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#1a3a52">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Denetim">
+<title>Tesis Denetim</title>
+
+<link rel="manifest" href='data:application/manifest+json,{"name":"Tesis Denetim","short_name":"Denetim","start_url":".","display":"standalone","background_color":"%23f5f3ee","theme_color":"%231a3a52","icons":[{"src":"data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 192 192%22><rect width=%22192%22 height=%22192%22 fill=%22%231a3a52%22 rx=%2228%22/><text x=%2296%22 y=%22128%22 font-size=%22110%22 text-anchor=%22middle%22 fill=%22%23f5f3ee%22 font-family=%22serif%22 font-weight=%22bold%22>D</text></svg>","sizes":"192x192","type":"image/svg+xml"}]}'>
+
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%231a3a52' rx='15'/><text x='50' y='68' font-size='58' text-anchor='middle' fill='%23f5f3ee' font-family='serif' font-weight='bold'>D</text></svg>">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.0/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.5.0/docx.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+<style>
+:root {
+  --bg: #f5f3ee;
+  --paper: #fdfcf8;
+  --ink: #1a2332;
+  --ink-soft: #4a5568;
+  --muted: #8b8680;
+  --line: #d4cec2;
+  --line-soft: #e8e3d6;
+  --primary: #1a3a52;
+  --primary-soft: #2c5777;
+  --accent: #b8542a;
+  --ok: #3d6b3d;
+  --ok-bg: #e3ebd9;
+  --no: #a32d2d;
+  --no-bg: #f4dad7;
+  --warn: #c97a1f;
+  --shadow-sm: 0 1px 2px rgba(26,35,50,0.06);
+  --shadow-md: 0 4px 12px rgba(26,35,50,0.10);
+  --shadow-lg: 0 12px 32px rgba(26,35,50,0.16);
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  margin: 0; padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Lora', Georgia, 'Times New Roman', serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Lora:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap');
+
+body {
+  font-family: 'Lora', Georgia, serif;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.display { font-family: 'Fraunces', Georgia, serif; font-weight: 600; letter-spacing: -0.01em; }
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+/* === HEADER === */
+.appbar {
+  background: var(--primary);
+  color: var(--paper);
+  padding: 14px 16px;
+  position: sticky; top: 0;
+  z-index: 100;
+  display: flex; align-items: center; gap: 12px;
+  box-shadow: var(--shadow-md);
+  padding-top: max(14px, env(safe-area-inset-top));
+}
+.appbar h1 { 
+  font-family: 'Fraunces', serif;
+  font-size: 18px; margin: 0; font-weight: 600;
+  flex: 1;
+  letter-spacing: 0.01em;
+}
+.appbar .back-btn, .appbar .icon-btn {
+  background: transparent; border: 1px solid rgba(245,243,238,0.25);
+  color: var(--paper); padding: 8px 12px;
+  border-radius: 6px; cursor: pointer;
+  font-family: inherit; font-size: 14px;
+  display: flex; align-items: center; gap: 6px;
+  min-height: 38px;
+}
+.appbar .back-btn:active, .appbar .icon-btn:active { background: rgba(245,243,238,0.15); }
+
+/* === SCREENS === */
+.screen { display: none; padding-bottom: 100px; }
+.screen.active { display: block; }
+.container { max-width: 900px; margin: 0 auto; padding: 16px; }
+
+/* === HOME SCREEN === */
+.hero {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-soft) 100%);
+  color: var(--paper);
+  padding: 32px 20px 28px;
+  text-align: center;
+  border-bottom: 4px solid var(--accent);
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(184,84,42,0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(245,243,238,0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+.hero-inner { position: relative; z-index: 1; }
+.hero .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 8px;
+}
+.hero h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 28px; margin: 0 0 6px;
+  font-weight: 600;
+  line-height: 1.15;
+}
+.hero p { margin: 0; opacity: 0.85; font-size: 14px; }
+
+.actions { padding: 20px 16px; display: flex; flex-direction: column; gap: 12px; }
+.btn-primary {
+  background: var(--primary); color: var(--paper);
+  border: none; padding: 18px 22px;
+  font-family: 'Fraunces', serif; font-size: 17px; font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 56px;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.1s;
+}
+.btn-primary:active { transform: scale(0.98); box-shadow: var(--shadow-sm); }
+.btn-primary.accent { background: var(--accent); }
+
+.btn-secondary {
+  background: var(--paper); color: var(--ink);
+  border: 1.5px solid var(--line);
+  padding: 14px 18px;
+  font-family: 'Lora', serif; font-size: 15px; font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 48px;
+}
+.btn-secondary:active { background: var(--line-soft); }
+
+/* === DENETIM LIST === */
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  margin: 24px 16px 8px;
+  font-weight: 600;
+}
+
+.denetim-list { padding: 0 16px; display: flex; flex-direction: column; gap: 10px; }
+
+.denetim-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--primary);
+  border-radius: 6px;
+  padding: 14px 16px;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 12px;
+  box-shadow: var(--shadow-sm);
+}
+.denetim-card:active { background: var(--line-soft); }
+.denetim-card.completed { border-left-color: var(--ok); }
+.denetim-card-body { flex: 1; min-width: 0; }
+.denetim-card-title { 
+  font-family: 'Fraunces', serif;
+  font-weight: 600; font-size: 16px;
+  margin: 0 0 2px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.denetim-card-meta { 
+  font-size: 12px; color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+.denetim-card-stat {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  min-width: 56px;
+  text-align: center;
+}
+.stat-good { background: var(--ok-bg); color: var(--ok); }
+.stat-bad { background: var(--no-bg); color: var(--no); }
+.stat-neutral { background: var(--line-soft); color: var(--ink-soft); }
+
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--muted);
+}
+.empty-state .icon { font-size: 48px; margin-bottom: 12px; opacity: 0.5; }
+.empty-state p { margin: 4px 0; font-size: 14px; }
+
+/* === FORM === */
+.form-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-sm);
+}
+.form-row { margin-bottom: 12px; }
+.form-row:last-child { margin-bottom: 0; }
+.form-row label {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 5px;
+}
+.form-row input, .form-row textarea, .form-row select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--line);
+  border-radius: 6px;
+  font-family: 'Lora', serif;
+  font-size: 16px;
+  background: var(--bg);
+  color: var(--ink);
+  transition: border-color 0.15s;
+}
+.form-row input:focus, .form-row textarea:focus, .form-row select:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: var(--paper);
+}
+.form-row textarea { resize: vertical; min-height: 70px; line-height: 1.45; }
+
+/* === SUMMARY BAR === */
+.summary-bar {
+  position: sticky;
+  top: 60px;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+  padding: 12px 16px;
+  display: flex; gap: 8px;
+  z-index: 50;
+  box-shadow: var(--shadow-sm);
+}
+.sum-pill {
+  flex: 1;
+  text-align: center;
+  padding: 8px 6px;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.sum-pill .num { 
+  display: block; 
+  font-family: 'Fraunces', serif;
+  font-size: 22px; font-weight: 600; 
+  line-height: 1; 
+}
+.sum-pill .lbl { 
+  font-size: 10px; 
+  letter-spacing: 0.1em;
+  text-transform: uppercase; 
+  opacity: 0.7; 
+  margin-top: 3px;
+  display: block;
+}
+.sum-var { background: var(--ok-bg); color: var(--ok); }
+.sum-yok { background: var(--no-bg); color: var(--no); }
+.sum-bos { background: var(--line-soft); color: var(--ink-soft); }
+.sum-pct { background: var(--primary); color: var(--paper); }
+
+/* === MAHAL & MADDE === */
+.mahal-header {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  padding: 20px 16px 8px;
+  display: flex; align-items: center; gap: 10px;
+}
+.mahal-header::before, .mahal-header::after {
+  content: '';
+  height: 1px;
+  background: var(--line);
+  flex: 1;
+}
+.mahal-header span { white-space: nowrap; }
+
+.madde {
+  background: var(--paper);
+  margin: 0 16px 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.madde-head {
+  padding: 12px 14px;
+  display: flex; gap: 10px; align-items: flex-start;
+}
+.madde-no {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  min-width: 22px;
+  margin-top: 2px;
+}
+.madde-text {
+  flex: 1;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--ink);
+}
+.madde-ref {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 4px;
+  letter-spacing: 0.05em;
+}
+.madde-controls {
+  display: flex;
+  border-top: 1px solid var(--line-soft);
+}
+.btn-status {
+  flex: 1;
+  padding: 14px 8px;
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--line-soft);
+  font-family: 'Fraunces', serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--muted);
+  min-height: 48px;
+  letter-spacing: 0.05em;
+}
+.btn-status:last-child { border-right: none; }
+.btn-status:active { background: var(--line-soft); }
+.btn-status.active.var { background: var(--ok-bg); color: var(--ok); }
+.btn-status.active.yok { background: var(--no-bg); color: var(--no); }
+.btn-status.active.na { background: var(--line-soft); color: var(--ink-soft); }
+.madde.has-var { border-left: 4px solid var(--ok); }
+.madde.has-yok { border-left: 4px solid var(--no); }
+.madde.has-na { border-left: 4px solid var(--muted); }
+
+.aciklama-toggle {
+  padding: 10px 14px;
+  background: var(--line-soft);
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+  cursor: pointer;
+  border-top: 1px solid var(--line);
+}
+.aciklama-area {
+  padding: 12px 14px;
+  border-top: 1px solid var(--line-soft);
+  display: none;
+  background: var(--bg);
+}
+.aciklama-area.open { display: block; }
+.aciklama-area textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 10px;
+  font-family: 'Lora', serif;
+  font-size: 15px;
+  resize: vertical;
+  min-height: 60px;
+  background: var(--paper);
+  color: var(--ink);
+}
+.aciklama-area textarea:focus { outline: none; border-color: var(--primary); }
+.has-aciklama { color: var(--accent); }
+
+.ack-tools {
+  display: flex; align-items: center; gap: 10px;
+  margin-top: 8px;
+}
+.mic-btn {
+  background: var(--paper);
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-family: 'Lora', serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 8px;
+  min-height: 40px;
+  transition: all 0.15s;
+}
+.mic-btn:active { transform: scale(0.97); }
+.mic-icon { font-size: 16px; line-height: 1; }
+.mic-btn.recording {
+  background: var(--no);
+  color: white;
+  border-color: var(--no);
+  animation: pulse 1.4s infinite;
+}
+.mic-btn.recording .mic-label::after {
+  content: " — Durdur";
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(163, 45, 45, 0.5); }
+  50% { box-shadow: 0 0 0 8px rgba(163, 45, 45, 0); }
+}
+.mic-hint {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  flex: 1;
+}
+.mic-hint.error { color: var(--no); }
+.mic-hint.live { color: var(--accent); }
+
+/* === FAB / FLOATING ACTIONS === */
+.fab-row {
+  position: fixed;
+  bottom: 16px; left: 16px; right: 16px;
+  display: flex; gap: 10px;
+  z-index: 90;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.fab {
+  flex: 1;
+  background: var(--primary);
+  color: var(--paper);
+  border: none;
+  padding: 16px;
+  border-radius: 8px;
+  font-family: 'Fraunces', serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 54px;
+}
+.fab:active { transform: scale(0.97); }
+.fab.accent { background: var(--accent); }
+.fab.danger { background: var(--no); }
+
+/* === MODAL === */
+.modal-bg {
+  position: fixed; inset: 0;
+  background: rgba(26,35,50,0.55);
+  z-index: 200;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+}
+.modal-bg.open { display: flex; }
+@media (min-width: 600px) {
+  .modal-bg { align-items: center; padding: 20px; }
+}
+.modal {
+  background: var(--paper);
+  border-radius: 12px 12px 0 0;
+  width: 100%;
+  max-width: 500px;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 20px;
+  box-shadow: var(--shadow-lg);
+}
+@media (min-width: 600px) {
+  .modal { border-radius: 12px; }
+}
+.modal h3 {
+  font-family: 'Fraunces', serif;
+  margin: 0 0 16px;
+  font-size: 20px;
+  color: var(--primary);
+}
+.modal-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+
+/* === INSTALL PROMPT === */
+.install-banner {
+  background: var(--accent);
+  color: white;
+  padding: 12px 16px;
+  font-size: 13px;
+  display: none;
+  align-items: center;
+  gap: 10px;
+}
+.install-banner.show { display: flex; }
+.install-banner button {
+  margin-left: auto;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-family: inherit;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* === TOAST === */
+.toast {
+  position: fixed;
+  bottom: 90px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: var(--paper);
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Lora', serif;
+  z-index: 300;
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+  max-width: 90%;
+  text-align: center;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="install-banner" id="installBanner">
+  <span>📱 Bu uygulamayı ana ekrana ekleyin</span>
+  <button onclick="installApp()">Yükle</button>
+  <button onclick="document.getElementById('installBanner').classList.remove('show')" style="background:transparent;border:none;color:white;font-size:18px;padding:0 4px;">×</button>
+</div>
+
+<!-- ===== HOME SCREEN ===== -->
+<div class="screen active" id="screen-home">
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="label">Turizm Bakanlığı</div>
+      <h2>Tesis Denetimi</h2>
+      <p>Saha denetim asistanı</p>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn-primary accent" onclick="newDenetim()">
+      <span style="font-size:22px;">＋</span> Yeni Denetim Başlat
+    </button>
+  </div>
+
+  <div class="section-title">Denetimlerim</div>
+  <div id="denetimList" class="denetim-list"></div>
+</div>
+
+<!-- ===== TESIS BILGI SCREEN ===== -->
+<div class="screen" id="screen-info">
+  <div class="appbar">
+    <button class="back-btn" onclick="goHome()">← Geri</button>
+    <h1>Tesis Bilgileri</h1>
+  </div>
+  <div class="container">
+    <div class="form-card" id="infoForm"></div>
+    <button class="btn-primary" onclick="saveInfoAndStart()">Denetime Başla →</button>
+  </div>
+</div>
+
+<!-- ===== DENETIM SCREEN ===== -->
+<div class="screen" id="screen-denetim">
+  <div class="appbar">
+    <button class="back-btn" onclick="goHome()">← Kaydet & Çık</button>
+    <h1 id="denetimTitle">Denetim</h1>
+    <button class="icon-btn" onclick="editInfo()">✎</button>
+  </div>
+  <div class="summary-bar">
+    <div class="sum-pill sum-var"><span class="num" id="sumVar">0</span><span class="lbl">Var</span></div>
+    <div class="sum-pill sum-yok"><span class="num" id="sumYok">0</span><span class="lbl">Yok</span></div>
+    <div class="sum-pill sum-bos"><span class="num" id="sumBos">0</span><span class="lbl">Boş</span></div>
+    <div class="sum-pill sum-pct"><span class="num" id="sumPct">—</span><span class="lbl">Uygunluk</span></div>
+  </div>
+  <div id="maddelerContainer"></div>
+  <div class="fab-row">
+    <button class="fab accent" onclick="openExport()">
+      <span>📤</span> Rapor & Paylaş
+    </button>
+  </div>
+</div>
+
+<!-- ===== EXPORT MODAL ===== -->
+<div class="modal-bg" id="exportModal">
+  <div class="modal">
+    <h3>Rapor Oluştur</h3>
+    <p style="color:var(--ink-soft); font-size:14px; margin: 0 0 8px;">Hangi formatta?</p>
+    <div class="modal-actions">
+      <button class="btn-primary" onclick="exportPDF()">📄 PDF Rapor</button>
+      <button class="btn-primary" style="background:var(--primary-soft);" onclick="exportWord()">📝 Word (.docx)</button>
+      <button class="btn-primary accent" onclick="sharePDF()">📱 PDF + Paylaş (WhatsApp/E-posta)</button>
+      <button class="btn-secondary" onclick="closeExport()">Kapat</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== INFO MODAL (re-edit) ===== -->
+<div class="modal-bg" id="infoModal">
+  <div class="modal">
+    <h3>Tesis Bilgilerini Düzenle</h3>
+    <div id="infoModalForm"></div>
+    <div class="modal-actions">
+      <button class="btn-primary" onclick="saveInfoFromModal()">Kaydet</button>
+      <button class="btn-secondary" onclick="closeInfoModal()">İptal</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ==================== ŞABLON: madde listesi ====================
+const SABLON = {
+  id: "gastronomi_lokanta_v1",
+  baslik: "Gastronomi Tesisi / 1. Sınıf Lokanta",
+  bilgiAlanlari: [
+    { key: "tesisAdi", label: "Tesisin Adı", required: true },
+    { key: "adres", label: "Adresi" },
+    { key: "telefon", label: "Telefon / Faks" },
+    { key: "belgeNo", label: "Belge Tarih ve No" },
+    { key: "belgeSahibi", label: "Belge Sahibi / Girişimci" },
+    { key: "denetimNedeni", label: "Denetleme Nedeni" },
+    { key: "denetimTarihi", label: "Denetleme Tarihi", type: "date" },
+    { key: "kapasite", label: "Kapasite" },
+    { key: "denetciAdi", label: "Denetçi Adı" }
+  ],
+  mahaller: [
+    { ad: "Giriş Holü", maddeler: [
+      { t: "Bankolu vestiyer", r: "Y:26" },
+      { t: "İdare odası", r: "Y:26" },
+      { t: "Genel WC (bay ve bayan için ayrı)", r: "Y:26" },
+      { t: "WC havalandırma (doğal veya mekanik)", r: "Y:26" },
+      { t: "Lavabolarda sıcak su", r: "Y:26" },
+      { t: "Klozet veya alaturka tuvalet", r: "Y:26" }
+    ]},
+    { ad: "Yemek Salonu", maddeler: [
+      { t: "Ana yemek salonu kapasitesi (min. 50 kişi / 60 m²)", r: "Y:26-2/b-1" },
+      { t: "Salon dekorasyonu (yöresel/ulusal/uluslararası mutfağa uygun)", r: "Y:26" },
+      { t: "Tefriş (masa-sandalye-örtü kalitesi)", r: "Y:26" },
+      { t: "Aydınlatma yeterliliği", r: "Y:26" },
+      { t: "Müzik yayını / canlı yemek müziği imkânı", r: "Y:26" },
+      { t: "Havalandırma ve klima sistemi", r: "Y:26" },
+      { t: "Salon-mutfak doğrudan bağlantı veya servis mutfağı", r: "Y:26-2/b-1" },
+      { t: "Salon ve servis ayrı kattaysa servis merdiveni veya monşarj", r: "Y:26-2/b-1" }
+    ]},
+    { ad: "Mutfak", maddeler: [
+      { t: "Mutfak alanı (min. 25 m² / salonun %25'i, büyük salonlarda min. 50 m²)", r: "Y:26-2/b-1" },
+      { t: "Hazırlık yerleri (sunulan yiyecek türlerine uygun)", r: "Y:26-2/b-1" },
+      { t: "Pişirme donanımı (ızgara, kuzine, fırın vb.)", r: "Y:26-2/b-1" },
+      { t: "Yemek/tabak sıcak saklama teçhizatı", r: "Y:26" },
+      { t: "Bulaşık makinesi (servis takımları için)", r: "Y:26-2/b-1" },
+      { t: "Yıkama, kurutma, istif yerleri", r: "Y:26" },
+      { t: "Raflar ve dolaplar", r: "Y:26" },
+      { t: "Malzeme deposu", r: "Y:26-2/b-1" },
+      { t: "Soğuk saklama deposu veya soğuk dolap (alarm, içeriden açılabilir)", r: "Y:26-2/b-1" },
+      { t: "Soğuk-sıcak sunum donanımı", r: "Y:26-2/b-1" },
+      { t: "Tatlı / pasta hazırlık ve servis yerleri", r: "Y:26" },
+      { t: "Servis mahalleri ile bağlantılı servis girişi", r: "Y:26" },
+      { t: "Zemin ve duvar kaplama (hijyenik, kolay temizlenebilir)", r: "Y:26" },
+      { t: "Mutfak havalandırması (doğal veya mekanik)", r: "Y:26" }
+    ]},
+    { ad: "Menü ve Servis", maddeler: [
+      { t: "Menü (sıcak, soğuk, tatlı en az beş yemek)", r: "Y:26" },
+      { t: "Yöresel / ulusal / uluslararası mutfak özelliği", r: "Y:26-1" },
+      { t: "Marka bilinirliği veya ün belgesi (basın/yayın)", r: "Y:26-2/a-1, T:9-1" }
+    ]},
+    { ad: "Teknik Altyapı", maddeler: [
+      { t: "Merkezi ısıtma (yıl boyu/kışın açık tesislerde)", r: "Y:26" },
+      { t: "Jeneratör (100 kuverin üzerindeyse)", r: "Y:26" },
+      { t: "Sıcak ve soğuk su", r: "Y:26" },
+      { t: "Su deposu + hidrofor/pompa (şehir dışı: klorlama+arıtma)", r: "Y:26" }
+    ]},
+    { ad: "Personel Mahalleri (bay ve bayan ayrı)", maddeler: [
+      { t: "Soyunma yerleri ve dolapları", r: "Y:26" },
+      { t: "Duş, WC, lavabo", r: "Y:26" },
+      { t: "Personel mahalleri havalandırma", r: "Y:26" },
+      { t: "Personelin SGK kayıtları", r: "Y:26" }
+    ]},
+    { ad: "Genel Değerlendirme", maddeler: [
+      { t: "İşletmenin yoğun turizm bölgesinde yer alması", r: "Y:26-2/a-5" },
+      { t: "Genel hijyen ve temizlik durumu", r: "Genel" },
+      { t: "Yangın/acil çıkış güvenlik tedbirleri", r: "Genel" }
+    ]}
+  ]
+};
+
+// ==================== STORAGE (IndexedDB) ====================
+const DB_NAME = "DenetimDB";
+const DB_VER = 1;
+let db;
+
+function openDB() {
+  return new Promise((res, rej) => {
+    const r = indexedDB.open(DB_NAME, DB_VER);
+    r.onupgradeneeded = (e) => {
+      const d = e.target.result;
+      if (!d.objectStoreNames.contains("denetimler")) {
+        d.createObjectStore("denetimler", { keyPath: "id" });
+      }
+    };
+    r.onsuccess = (e) => { db = e.target.result; res(db); };
+    r.onerror = (e) => rej(e);
+  });
+}
+
+function saveDenetim(d) {
+  return new Promise((res, rej) => {
+    const tx = db.transaction("denetimler", "readwrite");
+    tx.objectStore("denetimler").put(d);
+    tx.oncomplete = () => res();
+    tx.onerror = (e) => rej(e);
+  });
+}
+
+function loadAllDenetimler() {
+  return new Promise((res, rej) => {
+    const tx = db.transaction("denetimler", "readonly");
+    const req = tx.objectStore("denetimler").getAll();
+    req.onsuccess = () => res(req.result);
+    req.onerror = (e) => rej(e);
+  });
+}
+
+function getDenetim(id) {
+  return new Promise((res, rej) => {
+    const tx = db.transaction("denetimler", "readonly");
+    const req = tx.objectStore("denetimler").get(id);
+    req.onsuccess = () => res(req.result);
+    req.onerror = (e) => rej(e);
+  });
+}
+
+function deleteDenetim(id) {
+  return new Promise((res, rej) => {
+    const tx = db.transaction("denetimler", "readwrite");
+    tx.objectStore("denetimler").delete(id);
+    tx.oncomplete = () => res();
+  });
+}
+
+// ==================== STATE ====================
+let currentDenetim = null;
+
+// ==================== UI HELPERS ====================
+function showScreen(id) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  window.scrollTo(0, 0);
+}
+
+function toast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(t._h);
+  t._h = setTimeout(() => t.classList.remove("show"), 2400);
+}
+
+function uid() {
+  return "d_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 6);
+}
+
+function fmtDate(iso) {
+  if (!iso) return "—";
+  const d = new Date(iso);
+  return d.toLocaleDateString("tr-TR", { day: "2-digit", month: "2-digit", year: "numeric" });
+}
+
+// ==================== HOME ====================
+async function refreshHome() {
+  const list = document.getElementById("denetimList");
+  const all = await loadAllDenetimler();
+  all.sort((a,b) => (b.guncelleme||0) - (a.guncelleme||0));
+  
+  if (all.length === 0) {
+    list.innerHTML = `<div class="empty-state">
+      <div class="icon">📋</div>
+      <p><strong>Henüz denetim yok</strong></p>
+      <p>"Yeni Denetim Başlat" ile başlayabilirsiniz</p>
+    </div>`;
+    return;
+  }
+  
+  list.innerHTML = all.map(d => {
+    const stats = computeStats(d);
+    const titleText = d.bilgi.tesisAdi || "İsimsiz Tesis";
+    const dateText = fmtDate(d.bilgi.denetimTarihi || d.olusturma);
+    const isComplete = stats.bos === 0;
+    const statClass = stats.toplamCevap === 0 ? "stat-neutral" : (stats.pct >= 70 ? "stat-good" : "stat-bad");
+    const statText = stats.toplamCevap === 0 ? "—" : "%" + stats.pct;
+    return `<div class="denetim-card ${isComplete ? 'completed' : ''}" onclick="openDenetim('${d.id}')">
+      <div class="denetim-card-body">
+        <div class="denetim-card-title">${escapeHtml(titleText)}</div>
+        <div class="denetim-card-meta">${dateText} · ${stats.toplam} madde · ${stats.yok} eksik</div>
+      </div>
+      <div class="denetim-card-stat ${statClass}">${statText}</div>
+    </div>`;
+  }).join("");
+}
+
+function escapeHtml(s) {
+  if (s == null) return "";
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+}
+
+function goHome() {
+  if (currentDenetim) {
+    saveDenetim(currentDenetim).then(() => {
+      currentDenetim = null;
+      refreshHome();
+      showScreen("screen-home");
+    });
+  } else {
+    refreshHome();
+    showScreen("screen-home");
+  }
+}
+
+// ==================== NEW DENETIM ====================
+function newDenetim() {
+  currentDenetim = {
+    id: uid(),
+    sablonId: SABLON.id,
+    bilgi: {},
+    cevaplar: {}, // { mahalIdx_maddeIdx: { durum: "Var"/"Yok"/"NA", aciklama: "" } }
+    olusturma: Date.now(),
+    guncelleme: Date.now()
+  };
+  // Tarih default: bugün
+  currentDenetim.bilgi.denetimTarihi = new Date().toISOString().slice(0,10);
+  renderInfoForm("infoForm", currentDenetim.bilgi);
+  showScreen("screen-info");
+}
+
+function renderInfoForm(containerId, bilgi) {
+  const c = document.getElementById(containerId);
+  c.innerHTML = SABLON.bilgiAlanlari.map(f => {
+    const val = bilgi[f.key] || "";
+    const type = f.type === "date" ? "date" : "text";
+    return `<div class="form-row">
+      <label>${f.label}${f.required ? ' *' : ''}</label>
+      <input type="${type}" data-key="${f.key}" value="${escapeHtml(val)}" placeholder="${escapeHtml(f.label)}">
+    </div>`;
+  }).join("");
+}
+
+function readInfoForm(containerId) {
+  const inputs = document.querySelectorAll(`#${containerId} input`);
+  const obj = {};
+  inputs.forEach(i => { obj[i.dataset.key] = i.value.trim(); });
+  return obj;
+}
+
+async function saveInfoAndStart() {
+  const bilgi = readInfoForm("infoForm");
+  if (!bilgi.tesisAdi) {
+    toast("Tesis adı zorunludur");
+    return;
+  }
+  currentDenetim.bilgi = bilgi;
+  currentDenetim.guncelleme = Date.now();
+  await saveDenetim(currentDenetim);
+  renderDenetim();
+  showScreen("screen-denetim");
+}
+
+// ==================== OPEN EXISTING ====================
+async function openDenetim(id) {
+  currentDenetim = await getDenetim(id);
+  if (!currentDenetim) { toast("Denetim bulunamadı"); return; }
+  renderDenetim();
+  showScreen("screen-denetim");
+}
+
+// ==================== RENDER DENETIM ====================
+function renderDenetim() {
+  document.getElementById("denetimTitle").textContent = currentDenetim.bilgi.tesisAdi || "Denetim";
+  const c = document.getElementById("maddelerContainer");
+  let html = "";
+  let counter = 0;
+  SABLON.mahaller.forEach((mahal, mi) => {
+    html += `<div class="mahal-header"><span>${escapeHtml(mahal.ad)}</span></div>`;
+    mahal.maddeler.forEach((m, midx) => {
+      counter++;
+      const key = `${mi}_${midx}`;
+      const cevap = currentDenetim.cevaplar[key] || {};
+      const durum = cevap.durum || "";
+      const aciklama = cevap.aciklama || "";
+      const hasAck = aciklama.length > 0;
+      const cls = durum === "Var" ? "has-var" : durum === "Yok" ? "has-yok" : durum === "NA" ? "has-na" : "";
+      html += `<div class="madde ${cls}" id="madde-${key}">
+        <div class="madde-head">
+          <div class="madde-no">${counter}</div>
+          <div class="madde-text">
+            ${escapeHtml(m.t)}
+            <div class="madde-ref">${escapeHtml(m.r)}</div>
+          </div>
+        </div>
+        <div class="madde-controls">
+          <button class="btn-status var ${durum==='Var'?'active':''}" onclick="setDurum('${key}','Var')">VAR</button>
+          <button class="btn-status yok ${durum==='Yok'?'active':''}" onclick="setDurum('${key}','Yok')">YOK</button>
+          <button class="btn-status na ${durum==='NA'?'active':''}" onclick="setDurum('${key}','NA')">YOK SAY</button>
+        </div>
+        <button class="aciklama-toggle ${hasAck?'has-aciklama':''}" onclick="toggleAciklama('${key}')">
+          ${hasAck ? '✎ Açıklama var (düzenle)' : '+ Açıklama Ekle'}
+        </button>
+        <div class="aciklama-area ${hasAck?'open':''}" id="ack-${key}">
+          <textarea data-key="${key}" id="txt-${key}" placeholder="Tespit, not, fotoğraf no vb." onchange="setAciklama('${key}', this.value)">${escapeHtml(aciklama)}</textarea>
+          <div class="ack-tools">
+            <button class="mic-btn" id="mic-${key}" onclick="toggleMic('${key}')" title="Sesli not (Türkçe)">
+              <span class="mic-icon">🎤</span>
+              <span class="mic-label">Sesli Not</span>
+            </button>
+            <span class="mic-hint" id="hint-${key}"></span>
+          </div>
+        </div>
+      </div>`;
+    });
+  });
+  c.innerHTML = html;
+  updateSummary();
+}
+
+function setDurum(key, durum) {
+  if (!currentDenetim.cevaplar[key]) currentDenetim.cevaplar[key] = {};
+  // Aynı butona basarsa temizle
+  if (currentDenetim.cevaplar[key].durum === durum) {
+    currentDenetim.cevaplar[key].durum = "";
+  } else {
+    currentDenetim.cevaplar[key].durum = durum;
+  }
+  currentDenetim.guncelleme = Date.now();
+  saveDenetim(currentDenetim);
+  // Hücre güncelle (sadece o satır)
+  const m = document.getElementById(`madde-${key}`);
+  m.classList.remove("has-var","has-yok","has-na");
+  const d = currentDenetim.cevaplar[key].durum;
+  if (d === "Var") m.classList.add("has-var");
+  else if (d === "Yok") m.classList.add("has-yok");
+  else if (d === "NA") m.classList.add("has-na");
+  m.querySelectorAll(".btn-status").forEach(b => b.classList.remove("active"));
+  if (d) m.querySelector(`.btn-status.${d.toLowerCase()}`).classList.add("active");
+  updateSummary();
+}
+
+function toggleAciklama(key) {
+  document.getElementById(`ack-${key}`).classList.toggle("open");
+}
+
+function setAciklama(key, val) {
+  if (!currentDenetim.cevaplar[key]) currentDenetim.cevaplar[key] = {};
+  currentDenetim.cevaplar[key].aciklama = val;
+  currentDenetim.guncelleme = Date.now();
+  saveDenetim(currentDenetim);
+  const tg = document.querySelector(`#madde-${key} .aciklama-toggle`);
+  if (val.trim()) {
+    tg.classList.add("has-aciklama");
+    tg.innerHTML = '✎ Açıklama var (düzenle)';
+  } else {
+    tg.classList.remove("has-aciklama");
+    tg.innerHTML = '+ Açıklama Ekle';
+  }
+}
+
+function computeStats(d) {
+  let toplam = 0, varSay = 0, yokSay = 0, naSay = 0;
+  SABLON.mahaller.forEach((mahal, mi) => {
+    mahal.maddeler.forEach((m, midx) => {
+      toplam++;
+      const c = d.cevaplar[`${mi}_${midx}`];
+      if (c && c.durum === "Var") varSay++;
+      else if (c && c.durum === "Yok") yokSay++;
+      else if (c && c.durum === "NA") naSay++;
+    });
+  });
+  const bos = toplam - varSay - yokSay - naSay;
+  const denominator = varSay + yokSay; // NA hariç
+  const pct = denominator > 0 ? Math.round((varSay / denominator) * 100) : 0;
+  return { toplam, var: varSay, yok: yokSay, na: naSay, bos, pct, toplamCevap: varSay + yokSay + naSay };
+}
+
+function updateSummary() {
+  const s = computeStats(currentDenetim);
+  document.getElementById("sumVar").textContent = s.var;
+  document.getElementById("sumYok").textContent = s.yok;
+  document.getElementById("sumBos").textContent = s.bos;
+  document.getElementById("sumPct").textContent = (s.var + s.yok) === 0 ? "—" : "%" + s.pct;
+}
+
+// ==================== EDIT INFO MODAL ====================
+function editInfo() {
+  renderInfoForm("infoModalForm", currentDenetim.bilgi);
+  document.getElementById("infoModal").classList.add("open");
+}
+function closeInfoModal() {
+  document.getElementById("infoModal").classList.remove("open");
+}
+async function saveInfoFromModal() {
+  const bilgi = readInfoForm("infoModalForm");
+  if (!bilgi.tesisAdi) { toast("Tesis adı zorunludur"); return; }
+  currentDenetim.bilgi = bilgi;
+  currentDenetim.guncelleme = Date.now();
+  await saveDenetim(currentDenetim);
+  document.getElementById("denetimTitle").textContent = bilgi.tesisAdi;
+  closeInfoModal();
+  toast("Tesis bilgileri güncellendi");
+}
+
+// ==================== EXPORT MODAL ====================
+function openExport() {
+  document.getElementById("exportModal").classList.add("open");
+}
+function closeExport() {
+  document.getElementById("exportModal").classList.remove("open");
+}
+
+// ==================== PDF EXPORT ====================
+function buildReportData() {
+  const d = currentDenetim;
+  const s = computeStats(d);
+  const eksikler = [];
+  const naLar = [];
+  let counter = 0;
+  SABLON.mahaller.forEach((mahal, mi) => {
+    mahal.maddeler.forEach((m, midx) => {
+      counter++;
+      const c = d.cevaplar[`${mi}_${midx}`] || {};
+      if (c.durum === "Yok") {
+        eksikler.push({
+          no: counter, mahal: mahal.ad, madde: m.t, ref: m.r,
+          aciklama: c.aciklama || ""
+        });
+      } else if (c.durum === "NA") {
+        naLar.push({ no: counter, mahal: mahal.ad, madde: m.t });
+      }
+    });
+  });
+  return { d, s, eksikler, naLar };
+}
+
+function exportPDF(returnBlob = false) {
+  const { d, s, eksikler } = buildReportData();
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: "mm", format: "a4" });
+  
+  const margin = 15;
+  let y = margin;
+  
+  // Başlık
+  doc.setFillColor(26, 58, 82);
+  doc.rect(0, 0, 210, 28, "F");
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(16);
+  doc.setFont("helvetica", "bold");
+  doc.text("TESIS DENETIM RAPORU", margin, 12);
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "normal");
+  doc.text(SABLON.baslik, margin, 19);
+  doc.text("Tarih: " + fmtDate(d.bilgi.denetimTarihi), margin, 24);
+  
+  y = 36;
+  doc.setTextColor(0, 0, 0);
+  
+  // Tesis bilgileri
+  doc.setFontSize(11);
+  doc.setFont("helvetica", "bold");
+  doc.text("TESIS BILGILERI", margin, y);
+  y += 5;
+  doc.setLineWidth(0.3);
+  doc.line(margin, y, 210 - margin, y);
+  y += 4;
+  
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "normal");
+  SABLON.bilgiAlanlari.forEach(f => {
+    const val = d.bilgi[f.key] || "-";
+    const display = f.type === "date" && d.bilgi[f.key] ? fmtDate(d.bilgi[f.key]) : val;
+    doc.setFont("helvetica", "bold");
+    doc.text(f.label + ":", margin, y);
+    doc.setFont("helvetica", "normal");
+    const lines = doc.splitTextToSize(display, 130);
+    doc.text(lines, margin + 50, y);
+    y += Math.max(5, lines.length * 4.5);
+  });
+  
+  y += 4;
+  
+  // Özet kutusu
+  doc.setFillColor(245, 243, 238);
+  doc.rect(margin, y, 180, 20, "F");
+  doc.setLineWidth(0.3);
+  doc.rect(margin, y, 180, 20);
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "bold");
+  doc.text("DENETIM OZETI", margin + 3, y + 5);
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(10);
+  const colW = 36;
+  const items = [
+    ["Toplam Madde", String(s.toplam)],
+    ["Var (Uygun)", String(s.var)],
+    ["Yok (Eksik)", String(s.yok)],
+    ["Yok Say", String(s.na)],
+    ["Uygunluk", (s.var + s.yok) === 0 ? "-" : "%" + s.pct]
+  ];
+  items.forEach((it, idx) => {
+    const x = margin + 3 + idx * colW;
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "normal");
+    doc.text(it[0], x, y + 11);
+    doc.setFontSize(13);
+    doc.setFont("helvetica", "bold");
+    doc.text(it[1], x, y + 17);
+  });
+  y += 26;
+  
+  // Eksikler tablosu
+  doc.setFontSize(11);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(163, 45, 45);
+  doc.text(`TESPIT EDILEN EKSIKLIKLER (${eksikler.length})`, margin, y);
+  doc.setTextColor(0, 0, 0);
+  y += 3;
+  
+  if (eksikler.length === 0) {
+    y += 6;
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "italic");
+    doc.text("Eksiklik tespit edilmemistir.", margin, y);
+    y += 8;
+  } else {
+    doc.autoTable({
+      startY: y + 2,
+      head: [["#", "Mahal", "Eksik Nitelik", "Aciklama", "Mevzuat"]],
+      body: eksikler.map(e => [e.no, e.mahal, e.madde, e.aciklama || "-", e.ref]),
+      styles: { fontSize: 8, cellPadding: 2, font: "helvetica" },
+      headStyles: { fillColor: [26, 58, 82], textColor: 255, fontStyle: "bold" },
+      columnStyles: {
+        0: { cellWidth: 8, halign: "center" },
+        1: { cellWidth: 28 },
+        2: { cellWidth: 70 },
+        3: { cellWidth: 50 },
+        4: { cellWidth: 22, fontSize: 7 }
+      },
+      margin: { left: margin, right: margin }
+    });
+    y = doc.lastAutoTable.finalY + 8;
+  }
+  
+  // İmza
+  if (y > 250) { doc.addPage(); y = margin; }
+  y += 10;
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "bold");
+  doc.text("Denetci:", margin, y);
+  doc.text("Tesis Yetkilisi:", 120, y);
+  y += 2;
+  doc.setLineWidth(0.3);
+  doc.line(margin, y + 12, margin + 60, y + 12);
+  doc.line(120, y + 12, 180, y + 12);
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(9);
+  doc.text(d.bilgi.denetciAdi || "", margin, y + 17);
+  
+  // Footer her sayfa
+  const pageCount = doc.internal.getNumberOfPages();
+  for (let i = 1; i <= pageCount; i++) {
+    doc.setPage(i);
+    doc.setFontSize(8);
+    doc.setTextColor(140, 140, 140);
+    doc.text(`Sayfa ${i} / ${pageCount}`, 210 - margin, 290, { align: "right" });
+    doc.text(d.bilgi.tesisAdi || "Denetim", margin, 290);
+  }
+  
+  const fname = `Denetim_${(d.bilgi.tesisAdi || "tesis").replace(/[^a-z0-9çğıöşüÇĞİÖŞÜ ]/gi, "").replace(/\s+/g, "_")}_${(d.bilgi.denetimTarihi || "").replace(/-/g,"")}.pdf`;
+  
+  if (returnBlob) {
+    return { blob: doc.output("blob"), filename: fname };
+  }
+  doc.save(fname);
+  closeExport();
+  toast("PDF indirildi");
+}
+
+// ==================== WORD EXPORT ====================
+async function exportWord() {
+  const { d, s, eksikler } = buildReportData();
+  const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType, AlignmentType, HeadingLevel, BorderStyle, ShadingType } = docx;
+  
+  const blueColor = "1A3A52";
+  const accentColor = "B8542A";
+  
+  const titleP = new Paragraph({
+    children: [ new TextRun({ text: "TESİS DENETİM RAPORU", bold: true, size: 32, color: blueColor }) ],
+    spacing: { after: 100 }
+  });
+  const subP = new Paragraph({
+    children: [ new TextRun({ text: SABLON.baslik, size: 22, color: "555555" }) ],
+    spacing: { after: 300 }
+  });
+  
+  // Tesis bilgileri tablosu
+  const bilgiRows = SABLON.bilgiAlanlari.map(f => {
+    const val = d.bilgi[f.key] || "-";
+    const display = f.type === "date" && d.bilgi[f.key] ? fmtDate(d.bilgi[f.key]) : val;
+    return new TableRow({ children: [
+      new TableCell({
+        width: { size: 35, type: WidthType.PERCENTAGE },
+        shading: { type: ShadingType.SOLID, color: "F5F3EE" },
+        children: [new Paragraph({ children: [new TextRun({ text: f.label, bold: true, size: 20 })] })]
+      }),
+      new TableCell({
+        width: { size: 65, type: WidthType.PERCENTAGE },
+        children: [new Paragraph({ children: [new TextRun({ text: display, size: 20 })] })]
+      })
+    ]});
+  });
+  const bilgiTable = new Table({
+    width: { size: 100, type: WidthType.PERCENTAGE },
+    rows: bilgiRows
+  });
+  
+  // Özet
+  const ozetHeader = new Paragraph({
+    children: [new TextRun({ text: "DENETİM ÖZETİ", bold: true, size: 24, color: blueColor })],
+    spacing: { before: 300, after: 150 }
+  });
+  const pctText = (s.var + s.yok) === 0 ? "—" : "%" + s.pct;
+  const ozetTable = new Table({
+    width: { size: 100, type: WidthType.PERCENTAGE },
+    rows: [
+      new TableRow({ children: [
+        ["Toplam","Var","Yok","Yok Say","Uygunluk"].map(h => new TableCell({
+          shading: { type: ShadingType.SOLID, color: blueColor },
+          children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: h, bold: true, color: "FFFFFF", size: 18 })] })]
+        }))
+      ].flat() }),
+      new TableRow({ children: [
+        [s.toplam, s.var, s.yok, s.na, pctText].map(v => new TableCell({
+          children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: String(v), bold: true, size: 26 })] })]
+        }))
+      ].flat() })
+    ]
+  });
+  
+  // Eksikler
+  const eksikHeader = new Paragraph({
+    children: [new TextRun({ text: `TESPİT EDİLEN EKSİKLİKLER (${eksikler.length})`, bold: true, size: 24, color: "A32D2D" })],
+    spacing: { before: 400, after: 150 }
+  });
+  
+  let eksikContent;
+  if (eksikler.length === 0) {
+    eksikContent = new Paragraph({
+      children: [new TextRun({ text: "Eksiklik tespit edilmemiştir.", italics: true, size: 22 })]
+    });
+  } else {
+    const headerRow = new TableRow({ children: 
+      ["#","Mahal","Eksik Nitelik","Açıklama","Mevzuat"].map(h => new TableCell({
+        shading: { type: ShadingType.SOLID, color: blueColor },
+        children: [new Paragraph({ children: [new TextRun({ text: h, bold: true, color: "FFFFFF", size: 18 })] })]
+      }))
+    });
+    const dataRows = eksikler.map(e => new TableRow({ children: [
+      new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: String(e.no), size: 18 })] })] }),
+      new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: e.mahal, size: 18 })] })] }),
+      new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: e.madde, size: 18 })] })] }),
+      new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: e.aciklama || "-", size: 18 })] })] }),
+      new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: e.ref, size: 16, color: "888888" })] })] })
+    ]}));
+    eksikContent = new Table({
+      width: { size: 100, type: WidthType.PERCENTAGE },
+      rows: [headerRow, ...dataRows]
+    });
+  }
+  
+  // İmza
+  const imzaP = new Paragraph({
+    children: [new TextRun({ text: "\n\nDenetçi: " + (d.bilgi.denetciAdi || "_______________") + "        Tesis Yetkilisi: _______________", size: 20 })],
+    spacing: { before: 600 }
+  });
+  
+  const doc2 = new Document({
+    sections: [{
+      properties: {},
+      children: [
+        titleP, subP,
+        new Paragraph({ children: [new TextRun({ text: "TESİS BİLGİLERİ", bold: true, size: 24, color: blueColor })], spacing: { after: 150 } }),
+        bilgiTable,
+        ozetHeader, ozetTable,
+        eksikHeader, eksikContent,
+        imzaP
+      ]
+    }]
+  });
+  
+  const blob = await Packer.toBlob(doc2);
+  const fname = `Denetim_${(d.bilgi.tesisAdi || "tesis").replace(/[^a-z0-9çğıöşüÇĞİÖŞÜ ]/gi, "").replace(/\s+/g, "_")}_${(d.bilgi.denetimTarihi || "").replace(/-/g,"")}.docx`;
+  saveAs(blob, fname);
+  closeExport();
+  toast("Word dosyası indirildi");
+}
+
+// ==================== SHARE PDF ====================
+async function sharePDF() {
+  const result = exportPDF(true);
+  const file = new File([result.blob], result.filename, { type: "application/pdf" });
+  
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    try {
+      await navigator.share({
+        files: [file],
+        title: "Denetim Raporu",
+        text: `${currentDenetim.bilgi.tesisAdi || "Tesis"} denetim raporu`
+      });
+      closeExport();
+    } catch (e) {
+      if (e.name !== "AbortError") {
+        toast("Paylaşım başarısız: " + e.message);
+      }
+    }
+  } else {
+    // Fallback: indir + bilgilendir
+    saveAs(result.blob, result.filename);
+    toast("PDF indirildi. Galeri/Dosyalar'dan WhatsApp'ta paylaşabilirsiniz.");
+    closeExport();
+  }
+}
+
+// ==================== INSTALL PROMPT ====================
+let deferredInstall = null;
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredInstall = e;
+  document.getElementById("installBanner").classList.add("show");
+});
+async function installApp() {
+  if (!deferredInstall) return;
+  deferredInstall.prompt();
+  await deferredInstall.userChoice;
+  deferredInstall = null;
+  document.getElementById("installBanner").classList.remove("show");
+}
+
+// ==================== SPEECH-TO-TEXT (Web Speech API) ====================
+let activeRecognition = null;
+let activeRecKey = null;
+let baseTextBeforeRecording = "";
+
+function getSpeechRecognition() {
+  return window.SpeechRecognition || window.webkitSpeechRecognition || null;
+}
+
+function toggleMic(key) {
+  // Eğer aynı maddede kayıt aktifse → durdur
+  if (activeRecognition && activeRecKey === key) {
+    activeRecognition.stop();
+    return;
+  }
+  // Başka bir maddede aktifse → onu durdur, sonra yeniyi başlat
+  if (activeRecognition) {
+    activeRecognition.stop();
+    setTimeout(() => startMic(key), 200);
+    return;
+  }
+  startMic(key);
+}
+
+function startMic(key) {
+  const SR = getSpeechRecognition();
+  if (!SR) {
+    setHint(key, "Bu tarayıcı sesli yazıya çevirmeyi desteklemiyor (Chrome veya Safari deneyin)", true);
+    return;
+  }
+  
+  const txt = document.getElementById(`txt-${key}`);
+  const micBtn = document.getElementById(`mic-${key}`);
+  baseTextBeforeRecording = txt.value;
+  
+  const rec = new SR();
+  rec.lang = "tr-TR";
+  rec.continuous = true;
+  rec.interimResults = true;
+  
+  let finalTranscript = "";
+  
+  rec.onstart = () => {
+    micBtn.classList.add("recording");
+    setHint(key, "Dinliyorum… konuşun", false, true);
+  };
+  
+  rec.onresult = (event) => {
+    let interim = "";
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      const transcript = event.results[i][0].transcript;
+      if (event.results[i].isFinal) {
+        finalTranscript += (finalTranscript ? " " : "") + transcript.trim();
+      } else {
+        interim += transcript;
+      }
+    }
+    // Mevcut metin + final + (interim italic gösteremiyoruz textarea'da; düz ekleyelim)
+    const combined = combineText(baseTextBeforeRecording, finalTranscript, interim);
+    txt.value = combined;
+    if (interim) setHint(key, "… " + interim.trim().slice(-40), false, true);
+  };
+  
+  rec.onerror = (e) => {
+    let msg = "Hata: " + e.error;
+    if (e.error === "not-allowed") msg = "Mikrofon izni verilmedi. Tarayıcı ayarlarından izin verin.";
+    else if (e.error === "no-speech") msg = "Ses algılanmadı";
+    else if (e.error === "network") msg = "İnternet gerekiyor (sesli yazıya çevirme bulutta yapılır)";
+    else if (e.error === "audio-capture") msg = "Mikrofon bulunamadı";
+    setHint(key, msg, true);
+  };
+  
+  rec.onend = () => {
+    micBtn.classList.remove("recording");
+    activeRecognition = null;
+    activeRecKey = null;
+    // Final metni kaydet
+    const finalCombined = combineText(baseTextBeforeRecording, finalTranscript, "");
+    txt.value = finalCombined;
+    setAciklama(key, finalCombined);
+    if (finalTranscript) {
+      setHint(key, "Eklendi ✓", false);
+      setTimeout(() => setHint(key, ""), 2500);
+    }
+  };
+  
+  try {
+    rec.start();
+    activeRecognition = rec;
+    activeRecKey = key;
+  } catch (err) {
+    setHint(key, "Başlatılamadı: " + err.message, true);
+  }
+}
+
+function combineText(base, finalT, interim) {
+  let out = base.trim();
+  const newPart = (finalT + " " + interim).trim();
+  if (newPart) {
+    out = out ? (out + (out.endsWith(".") || out.endsWith("?") || out.endsWith("!") ? " " : ". ") + newPart) : newPart;
+  }
+  return out;
+}
+
+function setHint(key, msg, isError = false, isLive = false) {
+  const h = document.getElementById(`hint-${key}`);
+  if (!h) return;
+  h.textContent = msg;
+  h.classList.toggle("error", isError);
+  h.classList.toggle("live", isLive);
+}
+
+// ==================== INIT ====================
+(async function init() {
+  await openDB();
+  await refreshHome();
+  // Sesli not desteği kontrolü (sadece bilgi)
+  if (!getSpeechRecognition()) {
+    console.warn("Web Speech API desteklenmiyor. Sesli not özelliği çalışmayacak.");
+  }
+})();
+</script>
+</body>
+</html>
