@@ -480,56 +480,56 @@ const SABLONLAR = [
           {
             id: "g_yerlesme", ad: "Yerleşme ve Yapı (M.13)", tip: "normal",
             maddeler: [
-              { id: "g13_1", t: "Mahaller kullanım amacına uygun ölçülerde", r: "M.13/1", cevapTip: "uygun_uygundeğil" },
-              { id: "g13_2", t: "Tefriş ve donanım elemanları kaliteli ve nitelikli", r: "M.13/1", cevapTip: "uygun_uygundeğil" },
-              { id: "g13_3", t: "Dış cephe, iç duvar, zemin, tavan, çatı kaplama bakımlı ve nitelikli", r: "M.13/1", cevapTip: "uygun_uygundeğil" },
-              { id: "g13_4", t: "Bahçe varsa: özenle düzenlenmiş, aydınlatılmış, sürekli bakımı sağlanmış", r: "M.13/6", cevapTip: "uygun_uygundeğil" },
-              { id: "g13_5", t: "Çevre aydınlatması mevcut", r: "M.13/7", cevapTip: "var_yok" }
+              { id: "g13_1", t: "Mahaller kullanım amacına uygun ölçülerde mi?", r: "M.13/1", cevapTip: "uygun_uygundeğil" },
+              { id: "g13_2", t: "Tefriş ve donanım elemanları kaliteli ve nitelikli mi?", r: "M.13/1", cevapTip: "uygun_uygundeğil" },
+              { id: "g13_3", t: "Dış cephe, iç duvar, zemin, tavan, çatı kaplamaları bakımlı ve nitelikli mi?", r: "M.13/1", cevapTip: "uygun_uygundeğil" },
+              { id: "g13_4", t: "Bahçe varsa: özenle düzenlenmiş, aydınlatılmış ve bakımı sürekli sağlanıyor mu?", r: "M.13/6", cevapTip: "uygun_uygundeğil" },
+              { id: "g13_5", t: "Çevre aydınlatması mevcut mu?", r: "M.13/7", cevapTip: "evet_hayir" }
             ]
           },
           {
             id: "g_mahaller", ad: "Mahallerin Düzenlenmesi (M.14)", tip: "normal",
             maddeler: [
-              { id: "g14_1", t: "Isıtma: merkezi sistem veya klima ile sağlanıyor", r: "M.14/3", cevapTip: "evet_hayir" },
-              { id: "g14_2", t: "Tüm mekanlarda yeterli doğal veya mekanik havalandırma", r: "M.14/3", cevapTip: "uygun_uygundeğil" },
-              { id: "g14_3", t: "Devamlı sıcak ve soğuk su mevcut", r: "M.14/3", cevapTip: "var_yok" },
-              { id: "g14_4", t: "Jeneratör (kapasite 100 kişi/yatak üzerindeyse zorunlu)", r: "M.14/4", cevapTip: "var_yok_na",
+              { id: "g14_1", t: "Isıtma merkezi sistem veya klima ile sağlanıyor mu?", r: "M.14/3", cevapTip: "evet_hayir" },
+              { id: "g14_2", t: "Tüm mekanlarda yeterli doğal veya mekanik havalandırma var mı?", r: "M.14/3", cevapTip: "uygun_uygundeğil" },
+              { id: "g14_3", t: "Devamlı sıcak ve soğuk su mevcut mu?", r: "M.14/3", cevapTip: "evet_hayir" },
+              { id: "g14_4", t: "Jeneratör mevcut mu? (kapasite 100 kişi/yatak üzerindeyse zorunlu)", r: "M.14/4", cevapTip: "var_yok_na",
                 kosulNot: "Kapasite ≤ 100 ise 'Uygulanmaz' seçin" }
             ]
           },
           {
             id: "g_personel", ad: "Personel (M.15)", tip: "normal",
             maddeler: [
-              { id: "g15_1", t: "Turizm alanında tecrübeli, eğitimli veya sertifikalı personel istihdam ediliyor", r: "M.15/1", cevapTip: "uygun_uygundeğil" },
-              { id: "g15_2", t: "Personel görev mahallerine uygun, özel ve temiz kıyafetli", r: "M.15/4", cevapTip: "uygun_uygundeğil" },
-              { id: "g15_3", t: "İlk yardım konusunda sertifikalı personel mevcut", r: "M.15/5", cevapTip: "var_yok" },
-              { id: "g15_4", t: "Personel için soyunma yeri, dolap, duş ve tuvalet (bay/bayan ayrı)", r: "M.15/2", cevapTip: "uygun_uygundeğil",
+              { id: "g15_1", t: "Turizm alanında tecrübeli, eğitimli veya sertifikalı personel istihdam ediliyor mu?", r: "M.15/1", cevapTip: "uygun_uygundeğil" },
+              { id: "g15_2", t: "Personel görev mahallerine uygun, özel ve temiz kıyafetli mi?", r: "M.15/4", cevapTip: "uygun_uygundeğil" },
+              { id: "g15_3", t: "İlk yardım konusunda sertifikalı personel mevcut mu?", r: "M.15/5", cevapTip: "evet_hayir" },
+              { id: "g15_4", t: "Personel için soyunma yeri, dolap, duş ve tuvalet mevcut mu? (bay/bayan ayrı)", r: "M.15/2", cevapTip: "uygun_uygundeğil",
                 kosulNot: "20 oda altı konaklamalarda ve pansiyon/apart için farklı kurallar geçerli" }
             ]
           },
           {
             id: "g_tanitim", ad: "Tanıtım ve Bilgilendirme (M.16)", tip: "normal",
             maddeler: [
-              { id: "g16_1", t: "Bakanlık plaketi tesis girişinde müşterinin görebileceği yerde", r: "M.16/1", cevapTip: "var_yok" },
-              { id: "g16_2", t: "Tanıtım belgeye uygun, yanıltıcı bilgi içermiyor", r: "M.16/2", cevapTip: "uygun_uygundeğil" },
-              { id: "g16_3", t: "Bakanlık tarafından onaylanan fiyat tarifesi uygulanıyor", r: "M.16/5", cevapTip: "evet_hayir" }
+              { id: "g16_1", t: "Bakanlık plaketi tesis girişinde müşterinin görebileceği yerde mi?", r: "M.16/1", cevapTip: "var_yok" },
+              { id: "g16_2", t: "Tanıtım belgeye uygun mu? Yanıltıcı bilgi içermiyor mu?", r: "M.16/2", cevapTip: "uygun_uygundeğil" },
+              { id: "g16_3", t: "Bakanlık tarafından onaylanan fiyat tarifesi uygulanıyor mu?", r: "M.16/5", cevapTip: "evet_hayir" }
             ]
           },
           {
             id: "g_saglik", ad: "Sağlık, Temizlik, Güvenlik, Çevre (M.17)", tip: "normal",
             maddeler: [
-              { id: "g17_1", t: "Hijyen ve sağlık kurallarına uyuluyor (yiyecek hazırlama, depolama, servis)", r: "M.17/1", cevapTip: "uygun_uygundeğil" },
-              { id: "g17_2", t: "İlkyardım malzemeleri bulundurulmuş", r: "M.17/2", cevapTip: "var_yok" },
-              { id: "g17_3", t: "Düzenli temizlik ve bakım sağlanıyor", r: "M.17/3", cevapTip: "uygun_uygundeğil" },
-              { id: "g17_4", t: "Periyodik haşere mücadelesi yapılıyor (son fatura/sözleşme görüldü)", r: "M.17/3", cevapTip: "var_yok" },
-              { id: "g17_5", t: "Atık ayrıştırma yapılıyor (kâğıt, cam, metal, plastik, organik vb.)", r: "M.17/4", cevapTip: "uygun_uygundeğil" },
-              { id: "g17_6", t: "Atık sular ilgili mevzuata uygun arıtılıyor", r: "M.17/4", cevapTip: "uygun_uygundeğil" },
-              { id: "g17_7", t: "Su, enerji, kimyasal madde tüketimi asgari düzeyde tutuluyor", r: "M.17/4", cevapTip: "uygun_uygundeğil" },
-              { id: "g17_8", t: "Personele çevre konusunda eğitim verilmiş", r: "M.17/4", cevapTip: "evet_hayir" },
-              { id: "g17_9", t: "Müşteri ve personel güvenliği için elektronik ve fiziki önlemler alınmış", r: "M.17/5", cevapTip: "uygun_uygundeğil" },
-              { id: "g17_10", t: "Tesisat, elektrik ve mekanik donanım standartlara uygun ve bakımlı", r: "M.17/5", cevapTip: "uygun_uygundeğil" },
-              { id: "g17_11", t: "Teras, balkon, merdiven, açık koridorlarda korkuluk düzenlemesi", r: "M.17/5", cevapTip: "uygun_uygundeğil" },
-              { id: "g17_12", t: "Cam ve kaygan yüzeylerde uyarı işaretleri", r: "M.17/5", cevapTip: "var_yok" }
+              { id: "g17_1", t: "Hijyen ve sağlık kurallarına uyuluyor mu? (yiyecek hazırlama, depolama, servis)", r: "M.17/1", cevapTip: "uygun_uygundeğil" },
+              { id: "g17_2", t: "İlkyardım malzemeleri bulunduruluyor mu?", r: "M.17/2", cevapTip: "evet_hayir" },
+              { id: "g17_3", t: "Düzenli temizlik ve bakım sağlanıyor mu?", r: "M.17/3", cevapTip: "uygun_uygundeğil" },
+              { id: "g17_4", t: "Periyodik haşere mücadelesi yapılıyor mu? (son fatura/sözleşme görüldü mü?)", r: "M.17/3", cevapTip: "var_yok" },
+              { id: "g17_5", t: "Atık ayrıştırma yapılıyor mu? (kagıt, cam, metal, plastik, organik vb.)", r: "M.17/4", cevapTip: "uygun_uygundeğil" },
+              { id: "g17_6", t: "Atık sular ilgili mevzuata uygun arıtılıyor mu?", r: "M.17/4", cevapTip: "uygun_uygundeğil" },
+              { id: "g17_7", t: "Su, enerji, kimyasal madde tüketimi asgari düzeyde tutuluyor mu?", r: "M.17/4", cevapTip: "uygun_uygundeğil" },
+              { id: "g17_8", t: "Personele çevre konusunda eğitim verilmiş mi?", r: "M.17/4", cevapTip: "evet_hayir" },
+              { id: "g17_9", t: "Müşteri ve personel güvenliği için elektronik ve fiziki önlemler alınmış mı?", r: "M.17/5", cevapTip: "uygun_uygundeğil" },
+              { id: "g17_10", t: "Tesisat, elektrik ve mekanik donanım standartlara uygun ve bakımlı mı?", r: "M.17/5", cevapTip: "uygun_uygundeğil" },
+              { id: "g17_11", t: "Teras, balkon, merdiven ve açık koridorlarda uygun korkuluk düzenlemesi var mı?", r: "M.17/5", cevapTip: "uygun_uygundeğil" },
+              { id: "g17_12", t: "Cam ve kaygan yüzeylerde uyarı işaretleri var mı?", r: "M.17/5", cevapTip: "var_yok" }
             ]
           }
         ]
@@ -545,8 +545,8 @@ const SABLONLAR = [
           {
             id: "g26_1", ad: "Tesis Niteliği (M.26/1)", tip: "normal",
             maddeler: [
-              { id: "g26_1_1", t: "Yemek kültürünü turizm ürünü haline getirmiş", r: "M.26/1", cevapTip: "uygun_uygundeğil" },
-              { id: "g26_1_2", t: "Yöresel / geleneksel / ulusal / uluslararası mutfak özelliği taşıyor", r: "M.26/1", cevapTip: "uygun_uygundeğil" }
+              { id: "g26_1_1", t: "Tesis yemek kültürünü bir turizm ürünü haline getirmiş mi?", r: "M.26/1", cevapTip: "uygun_uygundeğil" },
+              { id: "g26_1_2", t: "Tesis yöresel/geleneksel/ulusal/uluslararası mutfak özelliği taşıyor mu?", r: "M.26/1", cevapTip: "uygun_uygundeğil" }
             ]
           },
           
@@ -557,11 +557,11 @@ const SABLONLAR = [
             tip: "alternatif",
             kural: "en_az_bir",
             maddeler: [
-              { id: "g26_2a_1", t: "İşletmenin yerel/bölgesel/ulusal/uluslararası basında marka bilinirliği veya ün sahibi olması (yazı/yayın örneği görüldü)", r: "M.26/2-a/1", cevapTip: "var_yok" },
-              { id: "g26_2a_2", t: "Bu niteliğe sahip bir işletme ile franchise/işletmecilik anlaşması sözleşmesi mevcut", r: "M.26/2-a/2", cevapTip: "var_yok" },
-              { id: "g26_2a_3", t: "Başvuru sahibinin başka bir işletmesi var ve o işletme (1) veya (2) niteliğine sahip (ortaklık belgesi görüldü)", r: "M.26/2-a/3", cevapTip: "var_yok" },
-              { id: "g26_2a_4", t: "Hâkim ortağın gastronomi alanında diploma veya MYK mesleki yeterlilik belgesi mevcut", r: "M.26/2-a/4", cevapTip: "var_yok" },
-              { id: "g26_2a_5", t: "Tesis yoğun turizm faaliyetlerinin bulunduğu bir bölgede yer alıyor", r: "M.26/2-a/5", cevapTip: "evet_hayir" }
+              { id: "g26_2a_1", t: "İşletmenin basında marka bilinirliği veya ün sahibi olduğuna dair yazı/yayın örneği var mı?", r: "M.26/2-a/1", cevapTip: "var_yok" },
+              { id: "g26_2a_2", t: "Bu niteliğe sahip bir işletme ile franchise/işletmecilik anlaşması mevcut mu?", r: "M.26/2-a/2", cevapTip: "var_yok" },
+              { id: "g26_2a_3", t: "Başvuru sahibinin (1) veya (2) niteliğine sahip başka bir işletmesi var mı? (ortaklık belgesi)", r: "M.26/2-a/3", cevapTip: "var_yok" },
+              { id: "g26_2a_4", t: "Hakim ortağın gastronomi alanında diploması veya MYK belgesi var mı?", r: "M.26/2-a/4", cevapTip: "var_yok" },
+              { id: "g26_2a_5", t: "Tesis yoğun turizm faaliyetlerinin bulunduğu bir bölgede mi?", r: "M.26/2-a/5", cevapTip: "evet_hayir" }
             ]
           },
           
@@ -569,31 +569,31 @@ const SABLONLAR = [
           {
             id: "g26_2b1_salon", ad: "Yemek Salonu (M.26/2-b/1, M.14/5-f)", tip: "normal",
             maddeler: [
-              { id: "g26_b1s_kapasite", t: "Yemek salonu kapasitesi", r: "M.14/5-f", cevapTip: "sayi", unit: "kişi",
+              { id: "g26_b1s_kapasite", t: "Yemek salonu kapasitesi kac kisi?", r: "M.14/5-f", cevapTip: "sayi", unit: "kişi",
                 kural: { tip: "sayi_min", min: 50, mesaj: "Min. 50 kişilik olmalı" } },
-              { id: "g26_b1s_alan", t: "Yemek salonu alanı (mutfak hariç)", r: "M.14/5-f", cevapTip: "sayi", unit: "m²" },
-              { id: "g26_b1s_doga", t: "Yemek salonu taban döşemesi mevcut arazi seviyesi üzerinde", r: "M.26/2-b/2", cevapTip: "uygun_uygundeğil" },
-              { id: "g26_b1s_isik", t: "En az bir cepheden yeterli doğal aydınlatma", r: "M.26/2-b/2", cevapTip: "uygun_uygundeğil" },
-              { id: "g26_b1s_klima", t: "Yemek salonunda klima sistemi", r: "M.26/2-b/4", cevapTip: "var_yok" },
-              { id: "g26_b1s_dekor", t: "Nitelikli tefriş, dekorasyon, donanım ve servis malzemeleri (yabancı mutfaksa o ülke kültürünü yansıtan)", r: "M.26/2-b/5", cevapTip: "uygun_uygundeğil" },
-              { id: "g26_b1s_baglanti", t: "Salon ile doğrudan bağlantılı mutfak", r: "M.14/5-f", cevapTip: "var_yok" },
-              { id: "g26_b1s_servis_merdiven", t: "Salon ve servis ayrı katlardaysa: servis merdiveni veya monşarj", r: "M.14/5-f", cevapTip: "var_yok_na",
+              { id: "g26_b1s_alan", t: "Yemek salonu alani kac m2? (mutfak haric)", r: "M.14/5-f", cevapTip: "sayi", unit: "m²" },
+              { id: "g26_b1s_doga", t: "Yemek salonu taban döşemesi mevcut arazi seviyesi üzerinde mi?", r: "M.26/2-b/2", cevapTip: "uygun_uygundeğil" },
+              { id: "g26_b1s_isik", t: "En az bir cepheden yeterli doğal aydınlatma sağlanıyor mu?", r: "M.26/2-b/2", cevapTip: "uygun_uygundeğil" },
+              { id: "g26_b1s_klima", t: "Yemek salonunda klima sistemi var mı?", r: "M.26/2-b/4", cevapTip: "var_yok" },
+              { id: "g26_b1s_dekor", t: "Tefriş, dekorasyon, donanım ve servis malzemeleri nitelikli mi? (yabancı mutfaksa o ülke kültürünü yansıtıyor mu?)", r: "M.26/2-b/5", cevapTip: "uygun_uygundeğil" },
+              { id: "g26_b1s_baglanti", t: "Salon ile doğrudan bağlantılı mutfak var mı?", r: "M.14/5-f", cevapTip: "var_yok" },
+              { id: "g26_b1s_servis_merdiven", t: "Salon ve servis ayrı katlardaysa servis merdiveni veya monşarj var mı?", r: "M.14/5-f", cevapTip: "var_yok_na",
                 kosulNot: "Aynı kattaysa 'Uygulanmaz' seçin" },
-              { id: "g26_b1s_ilave", t: "Mutfakla doğrudan bağlantısı olmayan ilave salon varsa servis mutfağı", r: "M.14/5-f", cevapTip: "var_yok_na" }
+              { id: "g26_b1s_ilave", t: "İlave salon varsa servis mutfağı mevcut mu?", r: "M.14/5-f", cevapTip: "var_yok_na" }
             ]
           },
           {
             id: "g26_2b1_mutfak", ad: "Mutfak (M.26/2-b/1, M.14/5-f)", tip: "normal",
             maddeler: [
-              { id: "g26_b1m_alan", t: "Mutfak alanı", r: "M.26/2-b/1, M.14/5-f", cevapTip: "sayi", unit: "m²",
+              { id: "g26_b1m_alan", t: "Mutfak alani kac m2?", r: "M.26/2-b/1, M.14/5-f", cevapTip: "sayi", unit: "m²",
                 kural: { tip: "sayi_min", min: 25, mesaj: "Gastronomi tesisinde en az 25 m². Salon ≤200 m² ise salonun %25'i, daha büyük salonlarda min. 50 m² olmalı" } },
-              { id: "g26_b1m_alanlar", t: "Hazırlama, pişirme, bulaşık bölümleri ve mutfak fonksiyonları mevcut", r: "M.14/5-f", cevapTip: "uygun_uygundeğil" },
-              { id: "g26_b1m_depo", t: "Malzeme deposu", r: "M.14/5-f", cevapTip: "var_yok" },
-              { id: "g26_b1m_soguk", t: "Soğuk saklama deposu veya soğuk dolap", r: "M.14/5-f", cevapTip: "var_yok" },
-              { id: "g26_b1m_haz", t: "Sunulan yiyecek türlerine uygun hazırlık yerleri", r: "M.14/5-f", cevapTip: "uygun_uygundeğil" },
-              { id: "g26_b1m_pis", t: "Izgara, kuzine ve yemek türlerine uygun pişirme donanımı", r: "M.14/5-f", cevapTip: "uygun_uygundeğil" },
-              { id: "g26_b1m_bulasik", t: "Servis takımları için bulaşık makinesi", r: "M.14/5-f", cevapTip: "var_yok" },
-              { id: "g26_b1m_sunum", t: "Soğuk-sıcak sunuma ilişkin donanım", r: "M.14/5-f", cevapTip: "var_yok" }
+              { id: "g26_b1m_alanlar", t: "Hazırlama, pişirme, bulaşık bölümleri ve mutfak fonksiyonları mevcut mu?", r: "M.14/5-f", cevapTip: "uygun_uygundeğil" },
+              { id: "g26_b1m_depo", t: "Malzeme deposu var mı?", r: "M.14/5-f", cevapTip: "var_yok" },
+              { id: "g26_b1m_soguk", t: "Soğuk saklama deposu veya soğuk dolap var mı?", r: "M.14/5-f", cevapTip: "var_yok" },
+              { id: "g26_b1m_haz", t: "Sunulan yiyecek türlerine uygun hazırlık yerleri var mı?", r: "M.14/5-f", cevapTip: "uygun_uygundeğil" },
+              { id: "g26_b1m_pis", t: "Izgara, kuzine ve yemek türlerine uygun pişirme donanımı mevcut mu?", r: "M.14/5-f", cevapTip: "uygun_uygundeğil" },
+              { id: "g26_b1m_bulasik", t: "Servis takımları için bulaşık makinesi var mı?", r: "M.14/5-f", cevapTip: "var_yok" },
+              { id: "g26_b1m_sunum", t: "Soğuk-sıcak sunuma ilişkin donanım var mı?", r: "M.14/5-f", cevapTip: "var_yok" }
             ]
           },
           
@@ -601,10 +601,10 @@ const SABLONLAR = [
           {
             id: "g26_2b3", ad: "Müşteri Mahalleri (M.26/2-b/3)", tip: "normal",
             maddeler: [
-              { id: "g26_b3_wc_e", t: "Erkek müşteriler için ayrı tuvalet", r: "M.26/2-b/3", cevapTip: "var_yok" },
-              { id: "g26_b3_wc_k", t: "Kadın müşteriler için ayrı tuvalet", r: "M.26/2-b/3", cevapTip: "var_yok" },
-              { id: "g26_b3_lav_e", t: "Erkek müşteriler için ayrı lavabo", r: "M.26/2-b/3", cevapTip: "var_yok" },
-              { id: "g26_b3_lav_k", t: "Kadın müşteriler için ayrı lavabo", r: "M.26/2-b/3", cevapTip: "var_yok" }
+              { id: "g26_b3_wc_e", t: "Erkek müşteriler için ayrı tuvalet var mı?", r: "M.26/2-b/3", cevapTip: "var_yok" },
+              { id: "g26_b3_wc_k", t: "Kadın müşteriler için ayrı tuvalet var mı?", r: "M.26/2-b/3", cevapTip: "var_yok" },
+              { id: "g26_b3_lav_e", t: "Erkek müşteriler için ayrı lavabo var mı?", r: "M.26/2-b/3", cevapTip: "var_yok" },
+              { id: "g26_b3_lav_k", t: "Kadın müşteriler için ayrı lavabo var mı?", r: "M.26/2-b/3", cevapTip: "var_yok" }
             ]
           },
           
@@ -615,16 +615,16 @@ const SABLONLAR = [
             tip: "alternatif",
             kural: "en_az_bir",
             maddeler: [
-              { id: "g26_b6_diploma", t: "Mutfak şefinin gastronomi alanında ulusal/uluslararası örgün eğitim diploması", r: "M.26/2-b/6", cevapTip: "var_yok" },
-              { id: "g26_b6_myk", t: "Mutfak şefinin MYK tarafından düzenlenen mesleki yeterlilik belgesi", r: "M.26/2-b/6", cevapTip: "var_yok" },
-              { id: "g26_b6_odul", t: "Mutfak şefinin gastronomi alanında ödülü", r: "M.26/2-b/6", cevapTip: "var_yok" },
-              { id: "g26_b6_taninir", t: "Mutfak şefinin yerel/ulusal/uluslararası tanınırlığı (yazı/yayın görüldü)", r: "M.26/2-b/6", cevapTip: "var_yok" }
+              { id: "g26_b6_diploma", t: "Mutfak şefinin gastronomi alanında örgün eğitim diploması var mı?", r: "M.26/2-b/6", cevapTip: "var_yok" },
+              { id: "g26_b6_myk", t: "Mutfak şefinin MYK mesleki yeterlilik belgesi var mı?", r: "M.26/2-b/6", cevapTip: "var_yok" },
+              { id: "g26_b6_odul", t: "Mutfak şefinin gastronomi alanında ödülü var mı?", r: "M.26/2-b/6", cevapTip: "var_yok" },
+              { id: "g26_b6_taninir", t: "Mutfak şefinin yerel/ulusal/uluslararası tanınırlığı var mı? (yazı/yayın görüldü mü?)", r: "M.26/2-b/6", cevapTip: "var_yok" }
             ]
           },
           {
             id: "g26_2b6_yabanci", ad: "Yabancı Mutfak (varsa)", tip: "normal",
             maddeler: [
-              { id: "g26_b6_yab", t: "Başka ulusa ait mutfak hizmeti veriliyorsa: o alanda eğitimli şef istihdamı", r: "M.26/2-b/6", cevapTip: "var_yok_na",
+              { id: "g26_b6_yab", t: "Yabancı mutfak hizmeti veriliyorsa o alanda eğitimli şef istihdam ediliyor mu?", r: "M.26/2-b/6", cevapTip: "var_yok_na",
                 kosulNot: "Yabancı mutfak yoksa 'Uygulanmaz'" }
             ]
           },
@@ -633,7 +633,7 @@ const SABLONLAR = [
           {
             id: "g26_2b7", ad: "Personel Eğitimi (M.26/2-b/7)", tip: "normal",
             maddeler: [
-              { id: "g26_b7_oran", t: "Konusunda deneyimli/eğitimli personel oranı", r: "M.26/2-b/7", cevapTip: "sayi", unit: "%",
+              { id: "g26_b7_oran", t: "Konusunda deneyimli/eğitimli personel oranı yüzde kaç?", r: "M.26/2-b/7", cevapTip: "sayi", unit: "%",
                 kural: { tip: "sayi_min", min: 20, mesaj: "Çalışan personelin en az %20'si konusunda deneyimli veya eğitim almış olmalı" } }
             ]
           },
@@ -642,11 +642,11 @@ const SABLONLAR = [
           {
             id: "g26_2b8", ad: "Menü (M.26/2-b/8)", tip: "normal",
             maddeler: [
-              { id: "g26_b8_icerik", t: "Menüde ürün içerikleri belirtilmiş", r: "M.26/2-b/8", cevapTip: "var_yok" },
-              { id: "g26_b8_alerjen", t: "Menüde alerjen bilgileri belirtilmiş", r: "M.26/2-b/8", cevapTip: "var_yok" },
-              { id: "g26_b8_vejetaryen", t: "Menüde vejetaryen/vegan tüketim uygunluğu belirtilmiş", r: "M.26/2-b/8", cevapTip: "var_yok" },
-              { id: "g26_b8_inanc", t: "Menüde inanç hassasiyetine yönelik içerik bilgisi", r: "M.26/2-b/8", cevapTip: "var_yok" },
-              { id: "g26_b8_dil", t: "Menü Türkçe + en az 1 yabancı dilde", r: "M.26/2-b/8", cevapTip: "uygun_uygundeğil" }
+              { id: "g26_b8_icerik", t: "Menüde ürün içerikleri belirtilmiş mi?", r: "M.26/2-b/8", cevapTip: "var_yok" },
+              { id: "g26_b8_alerjen", t: "Menüde alerjen bilgileri belirtilmiş mi?", r: "M.26/2-b/8", cevapTip: "var_yok" },
+              { id: "g26_b8_vejetaryen", t: "Menüde vejetaryen/vegan uygunluğu belirtilmiş mi?", r: "M.26/2-b/8", cevapTip: "var_yok" },
+              { id: "g26_b8_inanc", t: "Menüde inanç hassasiyetine yönelik bilgi var mı?", r: "M.26/2-b/8", cevapTip: "var_yok" },
+              { id: "g26_b8_dil", t: "Menü Türkçe ve en az 1 yabancı dilde mi?", r: "M.26/2-b/8", cevapTip: "uygun_uygundeğil" }
             ]
           },
           
@@ -654,32 +654,32 @@ const SABLONLAR = [
           {
             id: "g26_2b9", ad: "Yöresel/Geleneksel Mutfak (M.26/2-b/9) — Eğer bu mutfak veriliyorsa", tip: "normal",
             maddeler: [
-              { id: "g26_b9_yor", t: "En az 5 çeşit yöresel ürün kullanılıyor", r: "M.26/2-b/9", cevapTip: "var_yok_na" },
-              { id: "g26_b9_pis", t: "Geleneksel usul (veya modern yorumla) pişirme uygulanıyor", r: "M.26/2-b/9", cevapTip: "uygun_uygundeğil" },
-              { id: "g26_b9_aciklama", t: "Yöresel ürünler menüde anlatılarak açıklanmış", r: "M.26/2-b/9", cevapTip: "var_yok_na" }
+              { id: "g26_b9_yor", t: "En az 5 çeşit yöresel ürün kullanılıyor mu?", r: "M.26/2-b/9", cevapTip: "var_yok_na" },
+              { id: "g26_b9_pis", t: "Geleneksel usul (veya modern yorumla) pişirme uygulanıyor mu?", r: "M.26/2-b/9", cevapTip: "uygun_uygundeğil" },
+              { id: "g26_b9_aciklama", t: "Yöresel ürünler menüde anlatılarak açıklanmış mı?", r: "M.26/2-b/9", cevapTip: "var_yok_na" }
             ]
           },
           {
             id: "g26_2b10", ad: "Yabancı Mutfak (M.26/2-b/10) — Eğer veriliyorsa", tip: "normal",
             maddeler: [
-              { id: "g26_b10_ozgun", t: "Sunulan mutfağa özgü ürünler kullanılıyor", r: "M.26/2-b/10", cevapTip: "var_yok_na" },
-              { id: "g26_b10_pis", t: "Geleneksel usulle (veya modern yorumla) pişirme", r: "M.26/2-b/10", cevapTip: "uygun_uygundeğil" },
-              { id: "g26_b10_aciklama", t: "Menüde mutfağın anlatımı ve açıklaması", r: "M.26/2-b/10", cevapTip: "var_yok_na" }
+              { id: "g26_b10_ozgun", t: "Sunulan mutfağa özgü ürünler kullanılıyor mu?", r: "M.26/2-b/10", cevapTip: "var_yok_na" },
+              { id: "g26_b10_pis", t: "Geleneksel usulle (veya modern yorumla) pişirme yapılıyor mu?", r: "M.26/2-b/10", cevapTip: "uygun_uygundeğil" },
+              { id: "g26_b10_aciklama", t: "Menüde mutfağın anlatımı ve açıklaması var mı?", r: "M.26/2-b/10", cevapTip: "var_yok_na" }
             ]
           },
           {
             id: "g26_2b11", ad: "Dünya Mutfağı (M.26/2-b/11) — Eğer veriliyorsa", tip: "normal",
             maddeler: [
-              { id: "g26_b11_baslangic", t: "Başlangıç çeşidi adedi", r: "M.26/2-b/11", cevapTip: "sayi", unit: "adet",
+              { id: "g26_b11_baslangic", t: "Başlangıç kaç çeşit?", r: "M.26/2-b/11", cevapTip: "sayi", unit: "adet",
                 kural: { tip: "sayi_min", min: 3, mesaj: "En az 3 çeşit olmalı" } },
-              { id: "g26_b11_arasi", t: "Ara sıcak çeşidi adedi", r: "M.26/2-b/11", cevapTip: "sayi", unit: "adet",
+              { id: "g26_b11_arasi", t: "Ara sıcak kaç çeşit?", r: "M.26/2-b/11", cevapTip: "sayi", unit: "adet",
                 kural: { tip: "sayi_min", min: 3, mesaj: "En az 3 çeşit olmalı" } },
-              { id: "g26_b11_ana", t: "Ana yemek çeşidi adedi", r: "M.26/2-b/11", cevapTip: "sayi", unit: "adet",
+              { id: "g26_b11_ana", t: "Ana yemek kaç çeşit?", r: "M.26/2-b/11", cevapTip: "sayi", unit: "adet",
                 kural: { tip: "sayi_min", min: 3, mesaj: "En az 3 çeşit olmalı" } },
-              { id: "g26_b11_tatli", t: "Tatlı çeşidi adedi", r: "M.26/2-b/11", cevapTip: "sayi", unit: "adet",
+              { id: "g26_b11_tatli", t: "Tatlı kaç çeşit?", r: "M.26/2-b/11", cevapTip: "sayi", unit: "adet",
                 kural: { tip: "sayi_min", min: 3, mesaj: "En az 3 çeşit olmalı" } },
-              { id: "g26_b11_kalite", t: "Kaliteli malzemelerle, uygun servis malzemesiyle sunum", r: "M.26/2-b/11", cevapTip: "uygun_uygundeğil" },
-              { id: "g26_b11_aciklama", t: "Menüde anlatım ve açıklama", r: "M.26/2-b/11", cevapTip: "var_yok" }
+              { id: "g26_b11_kalite", t: "Kaliteli malzemelerle ve uygun servis malzemeleriyle sunum yapılıyor mu?", r: "M.26/2-b/11", cevapTip: "uygun_uygundeğil" },
+              { id: "g26_b11_aciklama", t: "Menüde anlatım ve açıklama var mı?", r: "M.26/2-b/11", cevapTip: "var_yok" }
             ]
           },
           
@@ -687,7 +687,7 @@ const SABLONLAR = [
           {
             id: "g26_2b12", ad: "Üretim (M.26/2-b/12)", tip: "normal",
             maddeler: [
-              { id: "g26_b12", t: "Sunulan yiyecek ürünleri işletme tarafından hazırlanıyor (seri üretim/hazır yemek değil)", r: "M.26/2-b/12, M.26/1", cevapTip: "evet_hayir" }
+              { id: "g26_b12", t: "Sunulan yiyecek ürünleri işletme tarafından hazırlanıyor mu? (seri üretim/hazır yemek değil)", r: "M.26/2-b/12, M.26/1", cevapTip: "evet_hayir" }
             ]
           },
           
@@ -1589,7 +1589,16 @@ function exportPDF(returnBlob = false) {
   // Çözüm: Türkçe karakterleri güvenli eşdeğerleriyle değiştirme fonksiyonu
   function tr(text) {
     if (!text) return "";
-    return String(text);
+    // Turkce karakterleri ASCII-guvenli eslesmelerine cevir (jsPDF Helvetica desteklemiyor)
+    return String(text)
+      .replace(/ş/g,"s").replace(/Ş/g,"S")
+      .replace(/ğ/g,"g").replace(/Ğ/g,"G")
+      .replace(/ı/g,"i").replace(/İ/g,"I")
+      .replace(/ö/g,"o").replace(/Ö/g,"O")
+      .replace(/ü/g,"u").replace(/Ü/g,"U")
+      .replace(/ç/g,"c").replace(/Ç/g,"C")
+      .replace(/â/g,"a").replace(/î/g,"i").replace(/û/g,"u")
+      .replace(/kâğıt/gi,"kagit"); // özel kelime düzeltmesi
   }
   
   const margin = 15;
